@@ -1,0 +1,2 @@
+gcc main.c init.o VM_init.o lumiere.o switch_blend.o switch_light.o actions.o axes.o -lm -lGL -lGLU -lglut -o test 
+./test
