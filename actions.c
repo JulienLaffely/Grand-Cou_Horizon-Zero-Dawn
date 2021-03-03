@@ -80,18 +80,42 @@ void touche_pressee(unsigned char key, int x, int y)
 
     case TOUCHE_MIN_Z:
     case TOUCHE_MAJ_Z:
-        if(angle_PARG1<135.0f)angle_PARG1+=1.0f;
 
+      if(angle_PAVG1<-90.0f){
+          if(angle_PAVG1==-91.0f)angle_PAVG1+=1.0f;
+          else angle_PAVG1+=2.0f;
+      }
+      else if (angle_PAVG2<90.0f){
+          if(angle_PAVG2==89.0f)angle_PAVG2+=1.0f;
+          else angle_PAVG2+=2.0f;
+      }
+
+        if((angle_PARG1<-90.0f)&&(angle_PARG2>-45.0f)){
+            angle_PARG1+=1.0f;
+            angle_PARG2-=1.0f;
+        }
         break;
 
     case TOUCHE_MIN_Q:
     case TOUCHE_MAJ_Q:
 
         break;
-
     case TOUCHE_MIN_S:
     case TOUCHE_MAJ_S:
 
+      if((angle_PAVG1==-90.0f)&&(angle_PAVG2>45.0f)){
+          if(angle_PAVG2==46.0f)angle_PAVG2-=1.0f;
+          else angle_PAVG2-=2.0f;
+      }
+      else if ((angle_PAVG1!=-135.0f)&&(angle_PAVG2==45.0f)){
+          if(angle_PAVG1==-134.0f)angle_PAVG1-=1.0f;
+          else angle_PAVG1-=2.0f;
+      }
+
+      if((angle_PARG1!=-135.0f)&&(angle_PARG2!=-0.0f)){
+          angle_PARG1-=1.0f;
+          angle_PARG2+=1.0f;
+      }
         break;
 
     case TOUCHE_MIN_D:

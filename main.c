@@ -6,28 +6,32 @@
 #include <GL/glut.h>
 #include <GL/glu.h>
 #include <GL/gl.h>
+#include <stdbool.h>
 
 GLfloat xrot = 0.0f;
 GLfloat yrot = 0.0f;
-GLfloat z = -30.0f;
+GLfloat z = -50.0f;
 static float test = 90.0f ;
+static float rotation_corp=30.0f;
+static float difference;
+static bool tourner = true;
 // P=Patte AV=AVant AR=ARriere G=Gauche D=Droite
 
-GLfloat angle_PAVG1 = 90.0f ;
-GLfloat angle_PAVG2 = 90.0f ;
-GLfloat angle_PAVG3 = 90.0f ;
+GLfloat angle_PAVG1 = -135.0f ;
+GLfloat angle_PAVG2 = 45.0f ;
+GLfloat angle_PAVG3 = 45.0f ;
 
-GLfloat angle_PAVD1 = 90.0f ;
-GLfloat angle_PAVD2 = 90.0f ;
-GLfloat angle_PAVD3 = 90.0f ;
+GLfloat angle_PAVD1 = -135.0f ;
+GLfloat angle_PAVD2 = 45.0f ;
+GLfloat angle_PAVD3 = 45.0f ;
 
-GLfloat angle_PARG1 = 90.0f ;
-GLfloat angle_PARG2 = 45.0f ;
-GLfloat angle_PARG3 = 90.0f ;
+GLfloat angle_PARG1 = -135.0f ;
+GLfloat angle_PARG2 = 0.0f ;
+GLfloat angle_PARG3 = 45.0f ;
 
-GLfloat angle_PARD1 = 90.0f ;
-GLfloat angle_PARD2 = 45.0f ;
-GLfloat angle_PARD3 = 90.0f ;
+GLfloat angle_PARD1 = -135.0f ;
+GLfloat angle_PARD2 = 0.0f ;
+GLfloat angle_PARD3 = 45.0f ;
 
 
 void patte_avant(GLfloat x , GLfloat y , GLfloat z , GLfloat angle1 ,GLfloat angle2,GLfloat angle3 ){
@@ -37,168 +41,143 @@ void patte_avant(GLfloat x , GLfloat y , GLfloat z , GLfloat angle1 ,GLfloat ang
             GLUquadricObj *cuisse;
             cuisse = gluNewQuadric();
             gluQuadricNormals(cuisse, GLU_SMOOTH);
-            glRotatef(angle1,1.0f,0.0f,0.0f);
             glTranslatef(x,y,z);
+            glRotatef(angle1+difference,1.0f,0.0f,0.0f);
             glScalef(1.0f,1.0f,2.0f);
             glColor3f(0,0,1);
             gluSphere (cuisse, 1.0f, 5, 5);
 
             //ANNULATION
             glScalef(1.0f,1.0f,1.0f/2.0f);
-            glTranslatef(-x,-y,-z);
-            glRotatef(-angle1,1.0f,0.0f,0.0f);
             //
 
 
             GLUquadricObj *rotule;
             rotule = gluNewQuadric();
             gluQuadricNormals(rotule, GLU_SMOOTH);
-            glTranslatef(x,y,z-2.0f);
+            glTranslatef(0.0f,0.0f,-2.0f);
+            glRotatef(-angle1,1.0f,0.0f,0.0f);
             glColor3f(0,1,0);
             gluSphere (rotule, 0.5f, 32, 32);
 
-            //ANNULATION
-            glTranslatef(-x,-y,-(z-2.0f));
-            //
+
 
             glRotatef(angle2,1.0f,0.0f,0.0f);
-            glTranslatef(x,y,z+4.0f);
-            glScalef(1.0f,1.0f,3.8f);
+            glTranslatef(0.0f,0.0f,2.5f);
+            glScalef(1.0f,1.0f,4.3f);
             glColor3f(1,0,0);
             glutSolidCube(1.0f);
 
             //ANNULATION
-            glScalef(1.0f,1.0f,1.0f/3.8f);
-            glTranslatef(-x,-y,-(z+4.0f));
-            glRotatef(-angle2,1.0f,0.0f,0.0f);
+            glScalef(1.0f,1.0f,1.0f/4.3f);
             //
 
             GLUquadricObj *rotule2;
             rotule2 = gluNewQuadric();
             gluQuadricNormals(rotule2, GLU_SMOOTH);
-            glTranslatef(x,y-4.0f,z-2.0f);
+            glTranslatef(0.0f,0.0f,2.3f);
+            glRotatef(-angle2,1.0f,0.0f,0.0f);
             glColor3f(0,1,0);
             gluSphere (rotule2, 0.5f, 32, 32);
 
-            //ANNULATION
-            glTranslatef(-x,-(y-4.0f),-(z-2.0f));
-            //
-
+            glTranslatef(0.0f,-1.8f,1.8f);
             glRotatef(angle3,1.0f,0.0f,0.0f);
-            glTranslatef(x,y,z+7.6f);
-            glScalef(1.0f,1.0f,3.0f);
+            glScalef(1.0f,1.0f,4.3f);
             glColor3f(1,0,0);
             glutSolidCube(1.0f);
 
             //ANNULATION
-            glScalef(1.0f,1.0f,1.0f/3.0f);
-            glTranslatef(-x,-y,-(z+7.6f));
-            glRotatef(-angle3,1.0f,0.0f,0.0f);
+            glScalef(1.0f,1.0f,1.0f/4.3f);
             //
 
             glColor3f(0,1,0);
-            glRotatef(-90.0f,1.0f,0.0f,0.0f);
-            glTranslatef(x,y+4.0f,z-9.8f);
+            glTranslatef(0.0f,0.0f,2.5f);
+            glRotatef(180.0f,1.0f,0.0f,0.0f);
             glutSolidCone(1.0f,1.5f,32,32);
-
     }
     glPopMatrix();
 }
 
 void patte_arriere(GLfloat x , GLfloat y , GLfloat z , GLfloat angle1 ,GLfloat angle2,GLfloat angle3 ){
-
     glPushMatrix();
     {
         GLUquadricObj *cuisse;
         cuisse = gluNewQuadric();
         gluQuadricNormals(cuisse, GLU_SMOOTH);
-        glRotatef(angle1,1.0f,0.0f,0.0f);
-        glTranslatef(x,y,z+1.0f);
+        glTranslatef(x,y,z);
+        glRotatef(angle1+difference,1.0f,0.0f,0.0f);
         glScalef(1.0f,1.0f,2.0f);
         glColor3f(0,0,1);
         gluSphere (cuisse, 1.3f, 3, 3);
 
         //ANNULATION
         glScalef(1.0f,1.0f,1.0f/2.0f);
-        glTranslatef(-x,-y,-(z+1.0f));
-        glRotatef(-angle1,1.0f,0.0f,0.0f);
         //
 
         GLUquadricObj *rotule;
         rotule = gluNewQuadric();
         gluQuadricNormals(rotule, GLU_SMOOTH);
-        glTranslatef(x,y-5.8f,z+0.8f);
+        glTranslatef(0.0f,0.0f,-2.0f);
+        glRotatef(-angle1,1.0,0.0f,0.0f);
         glColor3f(0,1,0);
         gluSphere (rotule, 0.5f, 32, 32);
 
-        //ANNULATION
-        glTranslatef(-x,-(y-5.8f),-(z+0.8f));
-        //
-
         glRotatef(angle2,1.0f,0.0f,0.0f);
-        glTranslatef(x,y-3.4f,z+4.8f);
+        glTranslatef(0.0f,0.0f,2.0f);
         glScalef(1.0f,1.0f,3.0f);
         glColor3f(1,0,0);
         glutSolidCube(1.0f);
 
         //ANNULATION
         glScalef(1.0f,1.0f,1.0f/3.0f);
-        glTranslatef(-x,-(y-3.4f),-(z+4.8f));
-        glRotatef(-angle2,1.0f,0.0f,0.0f);
         //
 
         GLUquadricObj *rotule2;
         rotule2 = gluNewQuadric();
         gluQuadricNormals(rotule2, GLU_SMOOTH);
-        glTranslatef(x,y-8.3f,z+3.1f);
+        glTranslatef(0.0f,0.0f,1.8f);
+        glRotatef(-angle2,1.0f,0.0f,0.0f);
         glColor3f(0,1,0);
         gluSphere (rotule2, 0.5f, 32, 32);
 
-        //ANNULATION
-        glTranslatef(-x,-(y-8.3f),-(z+3.1f));
-        //
-
+        glTranslatef(0.0f,-1.3f,1.3f);
         glRotatef(angle3,1.0f,0.0f,0.0f);
-        glTranslatef(x,y+2.5f,z+7.2f);
         glScalef(1.0f,1.0f,3.0f);
         glColor3f(1,0,0);
         glutSolidCube(1.0f);
 
         //ANNULATION
         glScalef(1.0f,1.0f,1.0f/3.0f);
-        glTranslatef(-x,-(y+2.5f),-(z+7.2f));
-        glRotatef(-angle3,1.0f,0.0f,0.0f);
         //
 
-
         glColor3f(0,1,0);
-        glRotatef(-90.0f,1.0f,0.0f,0.0f);
-        glTranslatef(x,y-5.9f,z-11.0f);
+        glRotatef(180.0f,1.0f,0.0f,0.0f);
+        glTranslatef(0.0f,0.0f,-2.0f);
         glutSolidCone(1.0f,1.5f,32,32);
-
-
-
 
     }
     glPopMatrix();
 }
 
 void pattes(){
-        patte_avant(-1.6f,-2.0f,0.0f,angle_PAVG1,angle_PAVG2,angle_PAVG3);
-        patte_arriere(-1.6f,1.7f,1.0f,angle_PARG1,angle_PARG2,angle_PARG3);
-        patte_avant(1.6f,-2.0f,0.0f,angle_PAVD1,angle_PAVD2,angle_PAVD3);
-        patte_arriere(1.6f,1.7f,1.0f,angle_PARD1,angle_PARD2,angle_PARD3);
+        patte_avant(-2.1f,0.0f,-3.0f,angle_PAVG1,angle_PAVG2,angle_PAVG3);
+        patte_arriere(-2.1f,0.0f,4.0f,angle_PARG1,angle_PARG2,angle_PARG3);
+        patte_avant(2.1f,0.0f,-3.0f,angle_PAVD1,angle_PAVD2,angle_PAVD3);
+        patte_arriere(2.1f,0.0f,4.0f,angle_PARD1,angle_PARD2,angle_PARD3);
 }
 
 
 void cou(){
+    glTranslatef(0,0.0f,-4.0f);
+    glRotatef(90.0f-rotation_corp,1.0f,0.0f,0.0f);
+    glColor3f(0,1,0);
+    glutSolidCube(0.5);
     GLUquadricObj *pObj;
     pObj = gluNewQuadric();
     gluQuadricNormals(pObj, GLU_SMOOTH);
-    glTranslatef(0,9.0f,-2.0f);
-    glRotatef(90.0f,1.0f,0.0f,0.0f);
+    glTranslatef(0.0f,0.0f,-10.0f);
     glColor3f(0,1,1);
-    gluCylinder(pObj,0.8f,0.8f,8.0f,32,32);
+    gluCylinder(pObj,0.8f,0.8f,10.0f,32,32);
     gluDeleteQuadric(pObj);
 }
 
@@ -223,19 +202,28 @@ void cou_tete(){
 
 
 void corp(){
-    //glTranslatef(0.0f,0.0f,test);
-    //test-=0.5f;
-    glPushMatrix();
-    {
     GLUquadricObj *pObj;
     pObj = gluNewQuadric();
     gluQuadricNormals(pObj, GLU_SMOOTH);
-    glRotatef(45.0f,1.0f,0.0f,0.0f);
+    glTranslatef(0.0f,15.0f,0.0f);
+
+    // faire tourner sur lui meme glRotatef(test,0.0f,1.0f,0.0f);
+    glRotatef(rotation_corp,1.0f,0.0f,0.0f);
+    /*if(tourner){
+        if(rotation_corp==45.0f)tourner=false;
+        else rotation_corp+=1.0f;
+    }
+    else {
+        if(rotation_corp==0.0f)tourner=true;
+        else rotation_corp-=1.0f;
+    }*/
+
     glScalef(1.0f,1.0f,-2.0f);
     glColor3f(1,1,0);
-    gluSphere (pObj, 2.0f, 5, 5);
-    }
-    glPopMatrix();
+    gluSphere (pObj, 3.0f, 5, 5);
+
+    glScalef(1.0f,1.0f,1.0f/-2.0f);
+
 }
 
 GLvoid Modelisation()
@@ -244,26 +232,17 @@ GLvoid Modelisation()
 
   glPushMatrix();
   {
-      glPushMatrix();
-      {
+      difference=45.0f-rotation_corp;
+      glTranslatef(0.0f,-10.0f,0.0f);
+      glColor3f(0.5f, 0.35f, 0.05f);
+      glScalef(500.0f,0.1f,500.0f);
+      glutSolidCube(4);
+      glScalef(1.0f/500.0f,1.0f/0.1f,1.0f/500.0f);
       corp();
       cou_tete();
       pattes();
-      }
-      glPopMatrix();
-      glPushMatrix();
-      {
-        glTranslatef(0.0f,-30.0f,0.0f);
-        glColor3f(0.5f, 0.35f, 0.05f);
-        glScalef(100.0f,0.1f,100.0f);
-        glutSolidCube(4);
-      }
-      glPopMatrix();
   }
   glPopMatrix();
-
-
-  axes();
   glutSwapBuffers();
 }
 
