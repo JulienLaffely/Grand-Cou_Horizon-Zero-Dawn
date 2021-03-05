@@ -10,11 +10,16 @@
 
 GLfloat xrot = 0.0f;
 GLfloat yrot = 0.0f;
-GLfloat z = -50.0f;
+GLfloat z = -80.0f;
+
+extern GLuint blend;
+extern GLuint light;
+
 static float test = 90.0f ;
-static float rotation_corp=30.0f;
+GLfloat rotation_corp=30.0f;
 static float difference;
 static bool tourner = true;
+static bool blending = true;
 // P=Patte AV=AVant AR=ARriere G=Gauche D=Droite
 
 GLfloat angle_PAVG1 = -135.0f ;
@@ -32,6 +37,11 @@ GLfloat angle_PARG3 = 45.0f ;
 GLfloat angle_PARD1 = -135.0f ;
 GLfloat angle_PARD2 = 0.0f ;
 GLfloat angle_PARD3 = 45.0f ;
+
+GLfloat mouvement = 0.0f;
+GLfloat hauteur = 15.0f;
+GLfloat pencher = 0.0f;
+GLfloat pivot = 0.0f;
 
 
 void patte_avant(GLfloat x , GLfloat y , GLfloat z , GLfloat angle1 ,GLfloat angle2,GLfloat angle3 ){
@@ -80,8 +90,8 @@ void patte_avant(GLfloat x , GLfloat y , GLfloat z , GLfloat angle1 ,GLfloat ang
             glColor3f(0,1,0);
             gluSphere (rotule2, 0.5f, 32, 32);
 
-            glTranslatef(0.0f,-1.8f,1.8f);
             glRotatef(angle3,1.0f,0.0f,0.0f);
+            glTranslatef(0.0f,0.0f,2.5f);
             glScalef(1.0f,1.0f,4.3f);
             glColor3f(1,0,0);
             glutSolidCube(1.0f);
@@ -140,8 +150,8 @@ void patte_arriere(GLfloat x , GLfloat y , GLfloat z , GLfloat angle1 ,GLfloat a
         glColor3f(0,1,0);
         gluSphere (rotule2, 0.5f, 32, 32);
 
-        glTranslatef(0.0f,-1.3f,1.3f);
         glRotatef(angle3,1.0f,0.0f,0.0f);
+        glTranslatef(0.0f,0.0f,2.0f);
         glScalef(1.0f,1.0f,3.0f);
         glColor3f(1,0,0);
         glutSolidCube(1.0f);
@@ -182,6 +192,7 @@ void cou(){
 }
 
 void tete(){
+
     GLUquadricObj *pObj;
     pObj = gluNewQuadric();
     gluQuadricNormals(pObj, GLU_SMOOTH);
@@ -205,9 +216,9 @@ void corp(){
     GLUquadricObj *pObj;
     pObj = gluNewQuadric();
     gluQuadricNormals(pObj, GLU_SMOOTH);
-    glTranslatef(0.0f,15.0f,0.0f);
-
-    // faire tourner sur lui meme glRotatef(test,0.0f,1.0f,0.0f);
+    //Le faire tourner sur lui meme (ne fonctionne pas) glRotatef(pivot,0.0f,1.0f,0.0f);
+    glTranslatef(0.0f,hauteur,mouvement);
+    glRotatef(pencher,0.0f,0.0f,1.0f);
     glRotatef(rotation_corp,1.0f,0.0f,0.0f);
     /*if(tourner){
         if(rotation_corp==45.0f)tourner=false;
@@ -223,21 +234,37 @@ void corp(){
     gluSphere (pObj, 3.0f, 5, 5);
 
     glScalef(1.0f,1.0f,1.0f/-2.0f);
-
 }
 
 GLvoid Modelisation()
 {
   VM_init();
-
+  glClearColor(1.0f,255,255,255);
+  glClear(GL_COLOR_BUFFER_BIT);
+  if(blending){
+      blend =  switch_blend(blend);
+      light = switch_light(light);
+      blending=false;
+  }
   glPushMatrix();
   {
       difference=45.0f-rotation_corp;
       glTranslatef(0.0f,-10.0f,0.0f);
-      glColor3f(0.5f, 0.35f, 0.05f);
       glScalef(500.0f,0.1f,500.0f);
+      glColor3f(0.5f, 0.35f, 0.05f);
       glutSolidCube(4);
       glScalef(1.0f/500.0f,1.0f/0.1f,1.0f/500.0f);
+      glColor3f(0,0,0);
+      for(int i = -500 ; i<500 ;i+=10){
+      glBegin(GL_LINES);
+          glVertex3f(-500, 1 , i);
+          glVertex3f(500, 1 , i);
+      glEnd();
+      glBegin(GL_LINES);
+          glVertex3f(i, 1 , -500);
+          glVertex3f(i, 1 , 500);
+      glEnd();
+      }
       corp();
       cou_tete();
       pattes();
