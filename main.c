@@ -38,7 +38,8 @@ GLfloat angle_PARD1 = -135.0f ;
 GLfloat angle_PARD2 = 0.0f ;
 GLfloat angle_PARD3 = 45.0f ;
 
-GLfloat mouvement = 0.0f;
+GLfloat mouvementx = 0.0f;
+GLfloat mouvementz = 0.0f;
 GLfloat hauteur = 15.0f;
 GLfloat pencher = 0.0f;
 GLfloat pivot = 0.0f;
@@ -196,8 +197,6 @@ void tete(){
     GLUquadricObj *pObj;
     pObj = gluNewQuadric();
     gluQuadricNormals(pObj, GLU_SMOOTH);
-    //glTranslatef(0.0f,0.0f,-0.5f);
-    //glScalef(1.0f,1.0f,45.0f);
     glColor3f(1,0,1);
     gluPartialDisk (pObj, 0.0f, 3.0f, 32, 32, 30, 300);
 }
@@ -216,24 +215,19 @@ void corp(){
     GLUquadricObj *pObj;
     pObj = gluNewQuadric();
     gluQuadricNormals(pObj, GLU_SMOOTH);
-    //Le faire tourner sur lui meme (ne fonctionne pas) glRotatef(pivot,0.0f,1.0f,0.0f);
-    glTranslatef(0.0f,hauteur,mouvement);
+
+    glTranslatef(mouvementx,hauteur,mouvementz);
+    glRotatef(pivot,0.0f,1.0f,0.0f);
+
     glRotatef(pencher,0.0f,0.0f,1.0f);
     glRotatef(rotation_corp,1.0f,0.0f,0.0f);
-    /*if(tourner){
-        if(rotation_corp==45.0f)tourner=false;
-        else rotation_corp+=1.0f;
-    }
-    else {
-        if(rotation_corp==0.0f)tourner=true;
-        else rotation_corp-=1.0f;
-    }*/
 
     glScalef(1.0f,1.0f,-2.0f);
     glColor3f(1,1,0);
     gluSphere (pObj, 3.0f, 5, 5);
 
     glScalef(1.0f,1.0f,1.0f/-2.0f);
+    axes();
 }
 
 GLvoid Modelisation()
@@ -248,6 +242,7 @@ GLvoid Modelisation()
   }
   glPushMatrix();
   {
+      printf("movx=%f movz=%f \n",mouvementx ,mouvementz );
       difference=45.0f-rotation_corp;
       glTranslatef(0.0f,-10.0f,0.0f);
       glScalef(500.0f,0.1f,500.0f);
@@ -265,9 +260,13 @@ GLvoid Modelisation()
           glVertex3f(i, 1 , 500);
       glEnd();
       }
+      glPushMatrix();
+      {
       corp();
       cou_tete();
       pattes();
+      }
+      glPopMatrix();
   }
   glPopMatrix();
   glutSwapBuffers();

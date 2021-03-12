@@ -27,11 +27,15 @@ extern GLfloat angle_PARD1 ;
 extern GLfloat angle_PARD2 ;
 extern GLfloat angle_PARD3 ;
 
-extern GLfloat mouvement ;
+extern GLfloat mouvementx ;
+extern GLfloat mouvementz ;
 extern GLfloat rotation_corp ;
 extern GLfloat pencher ;
 extern GLfloat hauteur;
 extern GLfloat pivot;
+
+static char axe[]="-z";
+
 
 bool syncro = true ;
 GLuint patte=0;
@@ -90,11 +94,14 @@ void touche_pressee(unsigned char key, int x, int y)
 
     case TOUCHE_MIN_Z:
     case TOUCHE_MAJ_Z:
-
       if(patte==0){
 
       if((rotation_corp>=24.0f)&&(syncro)){
-        mouvement-=1.0f/temps;
+          if(axe[0]=='-' && axe[1]=='z')mouvementz-=1.0f/temps;
+          if(axe[0]=='+' && axe[1]=='z')mouvementz+=1.0f/temps;
+          if(axe[0]=='-' && axe[1]=='x')mouvementx-=1.0f/temps;
+          if(axe[0]=='+' && axe[1]=='x')mouvementx+=1.0f/temps;
+
         angle_PAVD1-=5.0f/temps;
         angle_PAVD2-=5.0f/temps;
         angle_PAVD3-=5.0f/temps;
@@ -122,13 +129,19 @@ void touche_pressee(unsigned char key, int x, int y)
           syncro=false;
           if(angle_PAVD1!=-135.0f){
               hauteur-=0.2f/temps;
-            mouvement-=1.0f/temps;
+              if(axe[0]=='-' && axe[1]=='z')mouvementz-=1.0f/temps;
+              if(axe[0]=='+' && axe[1]=='z')mouvementz+=1.0f/temps;
+              if(axe[0]=='-' && axe[1]=='x')mouvementx-=1.0f/temps;
+              if(axe[0]=='+' && axe[1]=='x')mouvementx+=1.0f/temps;
             rotation_corp-=3.0f/temps;
             angle_PAVD1+=5.0f/temps;
             angle_PAVD2+=5.0f/temps;
             angle_PAVD3-=5.0f/temps;
            }else if (rotation_corp!=30){
-                        mouvement-=0.5f/temps;
+              if(axe[0]=='-' && axe[1]=='z')mouvementz-=0.5f/temps;
+              if(axe[0]=='+' && axe[1]=='z')mouvementz+=0.5f/temps;
+              if(axe[0]=='-' && axe[1]=='x')mouvementx-=0.5f/temps;
+              if(axe[0]=='+' && axe[1]=='x')mouvementx+=0.5f/temps;
                         rotation_corp+=3.0f/temps;
                         angle_PAVD3+=5.0f/temps;
 
@@ -162,7 +175,10 @@ void touche_pressee(unsigned char key, int x, int y)
       }
       else{
           if((rotation_corp>=24.0f)&&(syncro)){
-            mouvement-=1.0f/temps;
+              if(axe[0]=='-' && axe[1]=='z')mouvementz-=1.0f/temps;
+              if(axe[0]=='+' && axe[1]=='z')mouvementz+=1.0f/temps;
+              if(axe[0]=='-' && axe[1]=='x')mouvementx-=1.0f/temps;
+              if(axe[0]=='+' && axe[1]=='x')mouvementx+=1.0f/temps;
             angle_PAVG1-=5.0f/temps;
             angle_PAVG2-=5.0f/temps;
             angle_PAVG3-=5.0f/temps;
@@ -190,13 +206,19 @@ void touche_pressee(unsigned char key, int x, int y)
               syncro=false;
               if(angle_PAVG1!=-135.0f){
                   hauteur-=0.2f/temps;
-                mouvement-=1.0f/temps;
+                  if(axe[0]=='-' && axe[1]=='z')mouvementz-=1.0f/temps;
+                  if(axe[0]=='+' && axe[1]=='z')mouvementz+=1.0f/temps;
+                  if(axe[0]=='-' && axe[1]=='x')mouvementx-=1.0f/temps;
+                  if(axe[0]=='+' && axe[1]=='x')mouvementx+=1.0f/temps;
                 rotation_corp-=3.0f/temps;
                 angle_PAVG1+=5.0f/temps;
                 angle_PAVG2+=5.0f/temps;
                 angle_PAVG3-=5.0f/temps;
                }else if (rotation_corp!=30){
-                            mouvement-=0.5f/temps;
+                  if(axe[0]=='-' && axe[1]=='z')mouvementz-=0.5f/temps;
+                  if(axe[0]=='+' && axe[1]=='z')mouvementz+=0.5f/temps;
+                  if(axe[0]=='-' && axe[1]=='x')mouvementx-=0.5f/temps;
+                  if(axe[0]=='+' && axe[1]=='x')mouvementx+=0.5f/temps;
                             rotation_corp+=3.0f/temps;
                             angle_PAVG3+=5.0f/temps;
 
@@ -235,17 +257,28 @@ void touche_pressee(unsigned char key, int x, int y)
 
     case TOUCHE_MIN_Q:
     case TOUCHE_MAJ_Q:
+      if(axe[0]=='+' && axe[1]=='z')axe[1]='x';
+      else if(axe[0]=='-' && axe[1]=='z')axe[1]='x';
+      else if(axe[0]=='+' && axe[1]=='x'){axe[0]='-' ; axe[1]='z';}
+      else if(axe[0]=='-' && axe[1]=='x'){axe[0]='+' ; axe[1]='z';}
         pivot+=90.0f;
         break;
     case TOUCHE_MIN_S:
     case TOUCHE_MAJ_S:
-      pivot-=180.0f;
+      if(axe[0]=='+' && axe[1]=='z'){axe[0]='-' ; axe[1]='z';}
+      else if(axe[0]=='-' && axe[1]=='z'){axe[0]='+' ; axe[1]='z';}
+      else if(axe[0]=='+' && axe[1]=='x'){axe[0]='-' ; axe[1]='x';}
+      else if(axe[0]=='-' && axe[1]=='x'){axe[0]='+' ; axe[1]='x';}
+      pivot+=180.0f;
       break;
 
   case TOUCHE_MIN_D:
   case TOUCHE_MAJ_D:
+      if(axe[0]=='+' && axe[1]=='z'){axe[0]='-' ; axe[1]='x';}
+      else if(axe[0]=='-' && axe[1]=='z'){axe[0]='+' ; axe[1]='x';}
+      else if(axe[0]=='+' && axe[1]=='x')axe[1]='z';
+      else if(axe[0]=='-' && axe[1]=='x')axe[1]='z';
       pivot-=90.0f;
-
       break;
 
     }
