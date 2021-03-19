@@ -34,6 +34,8 @@ extern GLfloat pencher ;
 extern GLfloat hauteur;
 extern GLfloat pivot;
 
+extern GLuint camera;
+
 static char axe[]="-z";
 
 
@@ -73,6 +75,18 @@ void touche_pressee(unsigned char key, int x, int y)
     usleep(100);
 
   switch (key) {    
+
+    case PAVE_NUM_1:
+      camera=1;
+      break;
+    case PAVE_NUM_2:
+      camera=2;
+        break;
+    case PAVE_NUM_3:
+      camera=3;
+        break;
+
+
     case ESCAPE: 
       exit(1);                   	
       break; 

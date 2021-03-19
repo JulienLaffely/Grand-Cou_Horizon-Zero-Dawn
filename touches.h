@@ -21,6 +21,10 @@
 #define TOUCHE_MIN_D 100
 #define TOUCHE_MAJ_D 68
 
+#define PAVE_NUM_1 49
+#define PAVE_NUM_2 50
+#define PAVE_NUM_3 51
+
 #define ESCAPE 27
 #define ESPACE 32
 
