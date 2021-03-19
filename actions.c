@@ -82,11 +82,6 @@ void touche_pressee(unsigned char key, int x, int y)
       yrot = 0.0f;
       break;
 
-    case TOUCHE_MIN_B: 
-    case TOUCHE_MAJ_B: 
-     blend =  switch_blend(blend);
-      break;
-
     case TOUCHE_MIN_L: 
     case TOUCHE_MAJ_L: 
       light = switch_light(light);
@@ -145,7 +140,7 @@ void touche_pressee(unsigned char key, int x, int y)
                         rotation_corp+=3.0f/temps;
                         angle_PAVD3+=5.0f/temps;
 
-                        if(hauteur!=15.0f)hauteur+=0.2f/temps;
+                        if(hauteur!=11.0f)hauteur+=0.2f/temps;
 
                         if(pencher!=0.0f)  {
                             pencher +=3.0f/temps;
@@ -222,7 +217,7 @@ void touche_pressee(unsigned char key, int x, int y)
                             rotation_corp+=3.0f/temps;
                             angle_PAVG3+=5.0f/temps;
 
-                            if(hauteur!=15.0f)hauteur+=0.2f/temps;
+                            if(hauteur!=11.0f)hauteur+=0.2f/temps;
 
                             if(pencher!=0.0f)  {
                                 pencher -=3.0f/temps;

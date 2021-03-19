@@ -40,7 +40,7 @@ GLfloat angle_PARD3 = 45.0f ;
 
 GLfloat mouvementx = 0.0f;
 GLfloat mouvementz = 0.0f;
-GLfloat hauteur = 15.0f;
+GLfloat hauteur = 11.0f;
 GLfloat pencher = 0.0f;
 GLfloat pivot = 0.0f;
 
@@ -233,8 +233,6 @@ void corp(){
 GLvoid Modelisation()
 {
   VM_init();
-  glClearColor(1.0f,255,255,255);
-  glClear(GL_COLOR_BUFFER_BIT);
   if(blending){
       blend =  switch_blend(blend);
       light = switch_light(light);
@@ -242,11 +240,11 @@ GLvoid Modelisation()
   }
   glPushMatrix();
   {
-      printf("movx=%f movz=%f \n",mouvementx ,mouvementz );
+      printf("movx=%f hauteur=%f movz=%f \n",mouvementx, hauteur ,mouvementz );
       difference=45.0f-rotation_corp;
       glTranslatef(0.0f,-10.0f,0.0f);
       glScalef(500.0f,0.1f,500.0f);
-      glColor3f(0.5f, 0.35f, 0.05f);
+      glColor3f(0.0f, 0.6f, 0.2f);
       glutSolidCube(4);
       glScalef(1.0f/500.0f,1.0f/0.1f,1.0f/500.0f);
       glColor3f(0,0,0);
